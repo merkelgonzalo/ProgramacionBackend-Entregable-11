@@ -11,10 +11,10 @@ import cartRouter from './routes/carts.router.js';
 import sessionRouter from './routes/sessions.router.js';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
+import { config } from './config/config.js';
 
-const DB = 'ecommerce';
-const MONGO = 'mongodb+srv://merkelgonzalo:dalemillo123@cluster0.a9rnj46.mongodb.net/' + DB;
-const PORT = '8080';
+const MONGO = config.mongo.url;
+const PORT = config.server.port;
 const app = express();
 const conection = mongoose.connect(MONGO);
 const server = app.listen(PORT, ()=>{
@@ -25,7 +25,7 @@ app.use(session({
       mongoUrl: MONGO,
       ttl:3600
   }),
-  secret:'CoderSecret',
+  secret: config.auth.sessionSecret,
   resave:false,
   saveUninitialized:false
 }));

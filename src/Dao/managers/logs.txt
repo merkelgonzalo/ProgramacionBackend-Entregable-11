@@ -452,3 +452,5 @@ Date: 12/6/2023 - Hour: 20:06:13 - Method: Login
 Date: 12/6/2023 - Hour: 20:06:19 - Method: GET all products
 Date: 12/6/2023 - Hour: 20:07:35 - Method: GET all products
 Date: 12/6/2023 - Hour: 20:07:37 - Method: Login
+Date: 17/6/2023 - Hour: 20:50:23 - Method: GET all products
+Date: 17/6/2023 - Hour: 20:50:27 - Method: Login
