@@ -1,22 +1,15 @@
 import { Router } from 'express';
-import ManagerAccess from '../Dao/managers/ManagerAccess.js';
 import { cartModel } from '../Dao/models/carts.model.js';
 import { productModel } from '../Dao/models/products.model.js';
+import CartManager from '../Dao/managers/CartManager.js';
 
 const router = Router();
-const managerAccess = new ManagerAccess();
+const cartManager = new CartManager();
 
 router.get('/', async (req,res) => {
     try{
-        await managerAccess.saveLog('GET all carts');
-        const limit = req.query.limit;
-        const carts = await cartModel.find();
-        if(!limit){
-            res.send({result: "success", payload: carts});
-        }else{
-            const cartsLimit = carts.filter(cart => cart.id <= limit);
-            res.send({result: "success", payload: cartsLimit});
-        }
+        let result = await cartManager.getCarts(req);
+        res.send({result: "success", payload: result});
     }catch(error){
         console.log('Cannot get carts with mongoose: '+error)
     }
@@ -24,10 +17,7 @@ router.get('/', async (req,res) => {
 
 router.get('/:cid', async (req,res)=>{
     try{
-        await managerAccess.saveLog('GET a cart');
-        const idCart = req.params.cid;
-        const result = await cartModel.find({_id:idCart});
-        
+        let result = await cartManager.getCartById(req);
         res.send({
             status: 'success',
             payload: result
@@ -40,8 +30,7 @@ router.get('/:cid', async (req,res)=>{
 
 router.post('/', async (req,res) => {
     try{
-        await managerAccess.saveLog('POST a cart');
-        let result = await cartModel.create({});
+        let result = await cartManager.addCart(req);
         res.send({
             status: 'success',
             payload: result
@@ -52,48 +41,23 @@ router.post('/', async (req,res) => {
 });
 
 router.post('/:cid/product/:pid', async (req,res) => {
-
     try{
-        await managerAccess.saveLog('UPDATE a cart');
-        const idCart = req.params.cid;
-        const idProduct = req.params.pid;
-        const quantityBody = req.body.quantity
-
-        const cart = await cartModel.find({_id:idCart});
-        cart[0].products.push({product:idProduct, quantity:quantityBody});
-        
-        const result = await cartModel.updateOne({_id:idCart}, {$set:cart[0]});
-
+        const result = await cartManager.addProduct(req);
+        if(result == undefined) throw new Error("ID NOT FOUND");
         res.send({
             status: 'success',
             payload: result
         });
     }catch(error){
-        console.log('Cannot get the product with mongoose: '+error);
+        console.log('Cannot post the product with mongoose: '+error);
         return res.send({status:"error", error: "ID not found"});
     }
 });
 
 router.delete('/:cid/products/:pid', async (req,res) => {
-    //Deberá eliminar del carrito el producto seleccionado
     try{
-        await managerAccess.saveLog('DELETE a product in a cart');
-        const idCart = req.params.cid;
-        const idProduct = req.params.pid;
-
-        const cart = await cartModel.find({_id:idCart});
-        const product = await productModel.find({_id:idProduct});
-        
-        if(product.length == 0){
-            throw 'Product ID not found';
-        }
-
-        const products = cart[0].products.filter(element => element.product != idProduct);
-
-        cart[0].products = products;
-        
-        const result = await cartModel.updateOne({_id:idCart}, {$set:cart[0]});
-
+        const result = await cartManager.deleteProductById(req);
+        if(result == undefined) throw new Error("ID NOT FOUND");
         res.send({
             status: 'success',
             payload: result
@@ -105,44 +69,23 @@ router.delete('/:cid/products/:pid', async (req,res) => {
 });
 
 router.delete('/:cid', async (req,res) => {
-    //Deberá eliminar todos los productos del carrito
     try{
-        await managerAccess.saveLog('DELETE all products in a cart');
-        const idCart = req.params.cid;
-
-        const cart = await cartModel.find({_id:idCart});
-
-        cart[0].products = [];
-        
-        const result = await cartModel.updateOne({_id:idCart}, {$set:cart[0]});
-
+        const result = await cartManager.deleteCart(req.params.cid);
+        if(result == undefined) throw new Error("ID NOT FOUND");
         res.send({
             status: 'success',
             payload: result
         });
     }catch(error){
-        console.log('Cannot delete the product with mongoose: '+error);
-        return res.status(500).send({error: "ID not found"});
+        console.log('Cannot delete all products in the cart with mongoose: '+error);
+        return res.status(400).send({error: error});
     } 
 });
 
 router.put('/:cid', async (req,res) => {
-    //Deberá actualizar el carrito con un arreglo de productos con el formato especificado
     try{
-        await managerAccess.saveLog('UPDATE all products in a cart');
-        
-        const idCart = req.params.cid;
-        const newProducts = req.body.products;
-        const cart = await cartModel.findById(idCart);
-
-        if (!cart) {
-            return res.status(404).json({ message: 'ID not found' });
-        }
-
-        cart.products = newProducts;
-        
-        const result = await cartModel.updateOne({_id:idCart}, {$set:cart});
-
+        const result = await cartManager.updateCart(req.params.cid, req.body.products);
+        if(result == undefined) throw new Error("ID NOT FOUND");
         res.send({
             status: 'success',
             payload: result
@@ -150,43 +93,23 @@ router.put('/:cid', async (req,res) => {
 
     }catch(error){
         console.log('Cannot update the cart with mongoose: '+error);
-        return res.status(500).send({error: "Internal server error"});
+        return res.status(400).send({error: "ID NOT FOUND"});
     } 
 
 
 });
 
 router.put('/:cid/products/:pid', async (req,res) => {
-    //Deberá poder actualizar SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
-
     try{
-        await managerAccess.saveLog('UPDATE product s quantity in a cart');
-        const idCart = req.params.cid;
-        const idProduct = req.params.pid;
-        const newQuantity = req.body.quantity;
-
-        const cart = await cartModel.find({_id:idCart});
-        const product = await productModel.find({_id:idProduct});
-        
-        if(product.length == 0){
-            throw 'Product ID not found';
-        }
-
-        cart[0].products.forEach(function(element){
-            if(element.product == idProduct){
-                element.quantity = newQuantity;
-            }
-        });
-        
-        const result = await cartModel.updateOne({_id:idCart}, {$set:cart[0]});
-
+        const result = await cartManager.updateProduct(req.params.cid, req.params.pid, req.body.quantity);
+        if(result == undefined) throw new Error("ID NOT FOUND");
         res.send({
             status: 'success',
             payload: result
         });
     }catch(error){
-        console.log('Cannot delete the product with mongoose: '+error);
-        return res.send({status:"error", error: "ID not found"});
+        console.log('Cannot update the product s quantity with mongoose: '+error);
+        return res.status(400).send({error: "ID NOT FOUND"});
     }
 
 

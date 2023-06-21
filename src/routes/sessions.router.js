@@ -24,11 +24,6 @@ router.post('/login', passport.authenticate('login',{failureRedirect:'/faillogin
         role: req.user.role
     }
 
-    console.log("req.session.user: ");
-    console.log(req.session.user); //Todo OK
-    console.log("req.user: ");
-    console.log(req.user); //Todo OK
-
     res.send({status:"success", payload:req.session.user, message:"Login!!!"})
 
 });
@@ -55,8 +50,6 @@ router.get('/githubcallback', passport.authenticate('github',{failureRedirect:'/
 });
 
 router.get('/current', (req, res) => {
-    //console.log("req.user: "+ req.user);
-    //console.log("req.session.user: "+ req.session.user);
 
     if(!req.session.user) return res.status(400).send({status:"error", error: 'No user currently'});
     

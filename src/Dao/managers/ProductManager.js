@@ -27,7 +27,6 @@ export default class ProductManager{
 
     getProducts = async(req) => {   
         try{
-            
             let limit = req.query.limit;
             if(limit == undefined){
                 limit = 10;
