@@ -48,8 +48,8 @@ export default class ProductManager{
     }
 
     updateProduct = async (idProduct, product) => {
-
         try{
+            await managerAccess.saveLog('UPDATE a product');
             let result = await productModel.updateOne({_id:idProduct}, {$set:product});
             return result;
         }catch(error){
@@ -60,6 +60,7 @@ export default class ProductManager{
 
     deleteProductById = async (aId) => {
         try{
+            await managerAccess.saveLog('DELETE a product');
             let result = await productModel.findByIdAndDelete(aId);
             return result;
         }catch(error){

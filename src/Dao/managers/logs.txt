@@ -553,3 +553,6 @@ Date: 21/6/2023 - Hour: 13:25:02 - Method: GET a product
 Date: 21/6/2023 - Hour: 13:25:43 - Method: GET a product
 Date: 21/6/2023 - Hour: 13:27:54 - Method: GET a product
 Date: 21/6/2023 - Hour: 13:28:36 - Method: GET a product
+Date: 21/6/2023 - Hour: 17:43:41 - Method: UPDATE a product
+Date: 21/6/2023 - Hour: 17:55:23 - Method: DELETE a product
+Date: 21/6/2023 - Hour: 17:55:46 - Method: DELETE a product

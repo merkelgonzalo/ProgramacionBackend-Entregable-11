@@ -63,43 +63,49 @@ export const getProductController = async (req, res) => {
     }
 }
 
-// export const createProductController = async (req, res) => {
-//     try {
-//         const body = req.body;
-//         body.status = Boolean(body.status);
-//         body.price = Number(body.price);
-//         body.stock = Number(body.stock);
-//         // console.log("body: ", body);
-//         const productAdded = await productManager.addProduct(body);
-//         res.json({ status: "success", result: productAdded, message: "product added" });
-//     } catch (error) {
-//         res.status(400).json({ status: "error", message: error.message });
-//     }
-// }
+export const createProductController = async (req, res) => {
+    try {
+        let productBody = req.body;
+        if(!productBody.title || !productBody.price || !productBody.code || !productBody.category){
+            res.status(400).json({status:"error", error: "Incomplete values"});
+        }else{
+            let result = await productManager.addProduct(productBody);
+            res.send({
+                status: 'success',
+                payload: result
+            });
+        }
+    } catch (error) {
+        console.log('Cannot post the product with mongoose: '+error);
+        res.status(400).json({ status: "error", message: error.message });
+    }
+}
 
-// export const updateProductController = async (req, res) => {
-//     try {
-//         const productId = req.params.pid;
-//         const body = req.body;
-//         body.status = Boolean(body.status);
-//         body.price = Number(body.price);
-//         body.stock = Number(body.stock);
-//         // console.log("body: ", body);
-//         //actualizamos el método, pasándole el id y el body
-//         const productUpdated = await productManager.updateProduct(productId, body);
-//         res.json({ status: "success", result: productUpdated, message: "product updated" });
-//     } catch (error) {
-//         res.status(400).json({ message: error });
-//     }
-// }
+export const updateProductController = async (req, res) => {
+    try {
+        const product = req.body;
+        const idProduct = req.params.pid;
+        
+        if(!product.title || !product.price || !product.code || !product.category){
+            res.status(400).json({status:"error", error: "Incomplete values"});
+        }else{
+            let result = await productManager.updateProduct(idProduct, product);
+            if(result.matchedCount === 0) res.status(400).json({status:"error", error: "ID NOT FOUND"});
+            res.send({status: 'success', payload: result})
+        }
+    } catch (error) {
+        console.log('Cannot update the product with mongoose: '+error);
+        res.status(400).json({ status: "error", message: error.message });
+    }
+}
 
-// export const deleteProductController = async (req, res) => {
-//     try {
-//         const productId = req.params.pid;
-//         //luego eliminamos el producto
-//         const productdeleted = await productManager.deleteProduct(productId);
-//         res.json({ status: "success", result: productdeleted.message });
-//     } catch (error) {
-//         res.status(400).json({ message: error });
-//     }
-// }
+export const deleteProductController = async (req, res) => {
+    try {
+        let result = await productManager.deleteProductById(req.params.pid);
+        if(result === null) res.status(400).json({status:"error", error: "ID NOT FOUND"});
+        res.send({status: 'success', payload: result})
+    } catch (error) {
+        console.log('Cannot delete the product with mongoose: '+error);
+        res.status(400).json({ status: "error", message: error.message });
+    }
+}
