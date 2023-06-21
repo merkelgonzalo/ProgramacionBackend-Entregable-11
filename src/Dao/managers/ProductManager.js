@@ -1,4 +1,7 @@
 import { productModel } from '../models/products.model.js';
+import ManagerAccess from '../managers/ManagerAccess.js';
+
+const managerAccess = new ManagerAccess();
 
 export default class ProductManager{
 
@@ -25,23 +28,19 @@ export default class ProductManager{
         }
     }
 
-    getProducts = async(req) => {   
+    getProducts = async(query, options) => {   
         try{
-            let limit = req.query.limit;
-            if(limit == undefined){
-                limit = 10;
-            }
-            let products = await productModel.find();
-            products = products.slice(0,limit);
-            return products;
+            const result = await productModel.paginate(query, options);
+            return result;
         }catch(error){
             console.log('Cannot get products in manager with mongoose: '+error)
         }
     }
 
-    getProductById = async(aId) => {
+    getProductById = async(pid) => {
         try{
-            const result = await productModel.findOne({_id:aId});
+            await managerAccess.saveLog('GET a product');
+            const result = await productModel.findOne({_id:pid});
             return result;
         }catch(error){
             console.log('Cannot get product by id in manager with mongoose: '+error)

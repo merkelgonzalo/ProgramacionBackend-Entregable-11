@@ -1,38 +1,15 @@
 import { Router } from 'express';
 import ManagerAccess from '../Dao/managers/ManagerAccess.js';
 import ProductManager from '../Dao/managers/ProductManager.js';
+import { getProductsController, getProductController } from "../controllers/products.controller.js";
 
 const router = Router();
 const managerAccess = new ManagerAccess();
 const productManager = new ProductManager();
 
-router.get('/', async (req,res) => {
-    try{
-        await managerAccess.saveLog('GET all products');
-        const products = await productManager.getProducts(req);
-        res.send({
-            status: "success",
-            payload: products
-        });
-    }catch(error){
-        console.log('Cannot get products with mongoose: '+error)
-    }
-});
+router.get('/', getProductsController);
 
-router.get('/:pid', async (req,res)=>{
-    try{
-        await managerAccess.saveLog('GET a product');
-        const result = await productManager.getProductById(req.params.pid);
-        if(result === null) throw "ID not found";        
-        res.send({
-            status: 'success',
-            payload: result
-        });
-    }catch(error){
-        console.log('Cannot get the product with mongoose: '+error);
-        return res.send({status:"error", error: "ID not found"});
-    }
-});
+router.get('/:pid', getProductController);
 
 router.post('/', async (req,res) => {
     try{

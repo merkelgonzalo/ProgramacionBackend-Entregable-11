@@ -540,3 +540,16 @@ Date: 20/6/2023 - Hour: 23:16:16 - Method: UPDATE product s quantity in a cart
 Date: 20/6/2023 - Hour: 23:17:08 - Method: GET all carts
 Date: 20/6/2023 - Hour: 23:17:14 - Method: UPDATE product s quantity in a cart
 Date: 20/6/2023 - Hour: 23:17:20 - Method: GET all carts
+Date: 21/6/2023 - Hour: 11:23:49 - Method: GET all products
+Date: 21/6/2023 - Hour: 11:25:00 - Method: GET all products
+Date: 21/6/2023 - Hour: 12:20:31 - Method: GET all products
+Date: 21/6/2023 - Hour: 12:20:54 - Method: GET all products
+Date: 21/6/2023 - Hour: 13:20:47 - Method: GET a product
+Date: 21/6/2023 - Hour: 13:20:56 - Method: GET all products
+Date: 21/6/2023 - Hour: 13:21:02 - Method: GET a product
+Date: 21/6/2023 - Hour: 13:21:29 - Method: GET a product
+Date: 21/6/2023 - Hour: 13:21:51 - Method: GET a product
+Date: 21/6/2023 - Hour: 13:25:02 - Method: GET a product
+Date: 21/6/2023 - Hour: 13:25:43 - Method: GET a product
+Date: 21/6/2023 - Hour: 13:27:54 - Method: GET a product
+Date: 21/6/2023 - Hour: 13:28:36 - Method: GET a product
