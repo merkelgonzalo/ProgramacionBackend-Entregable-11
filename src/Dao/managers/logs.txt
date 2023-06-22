@@ -556,3 +556,39 @@ Date: 21/6/2023 - Hour: 13:28:36 - Method: GET a product
 Date: 21/6/2023 - Hour: 17:43:41 - Method: UPDATE a product
 Date: 21/6/2023 - Hour: 17:55:23 - Method: DELETE a product
 Date: 21/6/2023 - Hour: 17:55:46 - Method: DELETE a product
+Date: 21/6/2023 - Hour: 19:46:12 - Method: GET all carts
+Date: 21/6/2023 - Hour: 19:46:40 - Method: GET a cart
+Date: 21/6/2023 - Hour: 19:46:48 - Method: GET a cart
+Date: 21/6/2023 - Hour: 19:52:28 - Method: POST a cart
+Date: 21/6/2023 - Hour: 19:52:33 - Method: POST a cart
+Date: 21/6/2023 - Hour: 19:52:47 - Method: POST a cart
+Date: 21/6/2023 - Hour: 20:07:18 - Method: GET all carts
+Date: 21/6/2023 - Hour: 20:07:43 - Method: POST product in a cart
+Date: 21/6/2023 - Hour: 20:07:48 - Method: GET all carts
+Date: 21/6/2023 - Hour: 20:08:13 - Method: POST product in a cart
+Date: 21/6/2023 - Hour: 20:13:33 - Method: POST product in a cart
+Date: 21/6/2023 - Hour: 20:14:10 - Method: POST product in a cart
+Date: 21/6/2023 - Hour: 20:14:54 - Method: POST product in a cart
+Date: 21/6/2023 - Hour: 20:15:34 - Method: POST product in a cart
+Date: 21/6/2023 - Hour: 20:21:49 - Method: POST product in a cart
+Date: 21/6/2023 - Hour: 20:29:50 - Method: GET all carts
+Date: 21/6/2023 - Hour: 20:30:22 - Method: DELETE a product in a cart
+Date: 21/6/2023 - Hour: 20:30:27 - Method: GET all carts
+Date: 21/6/2023 - Hour: 20:30:54 - Method: DELETE a product in a cart
+Date: 21/6/2023 - Hour: 20:31:21 - Method: DELETE a product in a cart
+Date: 21/6/2023 - Hour: 20:37:08 - Method: DELETE all products in a cart
+Date: 21/6/2023 - Hour: 20:37:24 - Method: DELETE all products in a cart
+Date: 21/6/2023 - Hour: 20:37:27 - Method: GET all carts
+Date: 21/6/2023 - Hour: 20:45:03 - Method: GET all carts
+Date: 21/6/2023 - Hour: 20:46:36 - Method: UPDATE all products in a cart
+Date: 21/6/2023 - Hour: 20:46:40 - Method: GET all carts
+Date: 21/6/2023 - Hour: 20:47:20 - Method: UPDATE all products in a cart
+Date: 21/6/2023 - Hour: 20:47:48 - Method: UPDATE all products in a cart
+Date: 21/6/2023 - Hour: 20:52:46 - Method: UPDATE all products in a cart
+Date: 21/6/2023 - Hour: 20:53:38 - Method: UPDATE all products in a cart
+Date: 21/6/2023 - Hour: 20:53:56 - Method: UPDATE all products in a cart
+Date: 21/6/2023 - Hour: 20:56:04 - Method: UPDATE all products in a cart
+Date: 21/6/2023 - Hour: 21:10:38 - Method: GET all carts
+Date: 21/6/2023 - Hour: 21:10:54 - Method: UPDATE product s quantity in a cart
+Date: 21/6/2023 - Hour: 21:10:58 - Method: GET all carts
+Date: 21/6/2023 - Hour: 21:11:54 - Method: UPDATE product s quantity in a cart

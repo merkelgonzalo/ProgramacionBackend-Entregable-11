@@ -1,7 +1,4 @@
 import ProductManager from "../Dao/managers/ProductManager.js";
-//import { ProductModel } from "../Dao/models/products.model.js";
-//VER !!!!!!!!!!!!!!
-//import { checkValidProductFields } from "../middlewares/middlewares.js";
 
 const productManager = new ProductManager();
 
@@ -52,7 +49,7 @@ export const getProductsController = async (req, res) => {
 export const getProductController = async (req, res) => {
     try {
         const result = await productManager.getProductById(req.params.pid);
-        if(result === null) throw 'ID NOT FOUND';        
+        if(result === null) res.status(400).json({status:"error", error: "ID NOT FOUND"});       
         res.send({
             status: 'success',
             payload: result
