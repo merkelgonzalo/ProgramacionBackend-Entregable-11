@@ -56,6 +56,16 @@ export default class ProductManager {
         }
     }
 
+    getCartByIdPopulate = async (cid) => {
+        try {
+            await managerAccess.saveLog('GET a cart');
+            const result = await cartModel.findById(cid).populate("products.product").lean();
+            return result;
+        } catch (error) {
+            console.log('Cannot get the cart in manager with mongoose: ' + error);
+        }
+    }
+
     deleteCart = async (cid) => {
         try {
             await managerAccess.saveLog('DELETE all products in a cart');
